@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { useColorScheme } from '@mui/material/styles'
-import { APP_STYLE } from './../../const/common'
+import { APP_STYLE } from '~/const/common'
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()

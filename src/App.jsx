@@ -1,5 +1,5 @@
-import ThemeConfig from './components/config/ThemeConfig'
-import Board from './pages/Boards/_id'
+import ThemeConfig from '~/components/config/ThemeConfig'
+import Board from '~/pages/Boards/_id'
 
 function App() {
   return (

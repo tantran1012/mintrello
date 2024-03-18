@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline'
-import { cyan, deepOrange, orange, teal } from '@mui/material/colors'
+import { cyan, deepOrange, grey, orange, teal } from '@mui/material/colors'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
   experimental_extendTheme as extendTheme
@@ -25,8 +25,54 @@ const ThemeConfig = ({ children }) => {
           secondary: orange
         }
       }
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            '*::-webkit-scrollbar': {
+              width: '8px',
+              height: '8px'
+            },
+            '*::-webkit-scrollbar-thumb': {
+              backgroundColor: grey[300],
+              borderRadius: '8px'
+            },
+            '*::-webkit-scrollbar-thumb:hover': {
+              backgroundColor: teal[700],
+              borderRadius: '8px'
+            }
+          }
+        }
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none'
+          }
+        }
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem'
+          })
+        }
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem',
+            '.MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.primary.light },
+            '&:hover': {
+              '.MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.primary.main }
+            }
+          })
+        }
+      }
     }
-    // ...other properties
   })
 
   return (
