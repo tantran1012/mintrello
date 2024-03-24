@@ -1,6 +1,10 @@
+import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import { alpha, styled } from '@mui/material/styles'
+import { useState } from 'react'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -43,14 +47,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     }
   }
 }))
-const SearchBar = () => {
+const SearchBar = (props) => {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase type="search" placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-    </Search>
+    <Box {...props}>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          type="text"
+          value={searchValue}
+          placeholder="Search…"
+          onChange={(e) => setSearchValue(e.target.value)}
+          inputProps={{ 'aria-label': 'search' }}
+          endAdornment={
+            searchValue ? (
+              <IconButton size="small" color="inherit" onClick={() => setSearchValue('')}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            ) : (
+              ''
+            )
+          }
+          sx={{ pr: '8px' }}
+        />
+      </Search>
+    </Box>
   )
 }
 

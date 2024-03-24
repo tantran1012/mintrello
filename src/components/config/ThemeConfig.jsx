@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline'
-import { cyan, deepOrange, grey, orange, teal } from '@mui/material/colors'
+import { grey } from '@mui/material/colors'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
   experimental_extendTheme as extendTheme
@@ -13,18 +13,18 @@ const ThemeConfig = ({ children }) => {
       boardBarHeight: '58px'
     },
     colorSchemes: {
-      light: {
-        palette: {
-          primary: teal,
-          secondary: deepOrange
-        }
-      },
-      dark: {
-        palette: {
-          primary: cyan,
-          secondary: orange
-        }
-      }
+      // light: {
+      //   palette: {
+      //     primary: teal,
+      //     secondary: deepOrange
+      //   }
+      // },
+      // dark: {
+      //   palette: {
+      //     primary: cyan,
+      //     secondary: orange
+      //   }
+      // }
     },
     components: {
       MuiCssBaseline: {
@@ -35,11 +35,11 @@ const ThemeConfig = ({ children }) => {
               height: '8px'
             },
             '*::-webkit-scrollbar-thumb': {
-              backgroundColor: grey[300],
+              backgroundColor: grey[400],
               borderRadius: '8px'
             },
             '*::-webkit-scrollbar-thumb:hover': {
-              backgroundColor: teal[700],
+              backgroundColor: grey[500],
               borderRadius: '8px'
             }
           }
@@ -54,22 +54,22 @@ const ThemeConfig = ({ children }) => {
       },
       MuiInputLabel: {
         styleOverrides: {
-          root: ({ theme }) => ({
-            color: theme.palette.primary.main,
+          root: {
+            color: 'inherit',
             fontSize: '0.875rem'
-          })
+          }
         }
       },
       MuiOutlinedInput: {
         styleOverrides: {
-          root: ({ theme }) => ({
-            color: theme.palette.primary.main,
+          root: {
             fontSize: '0.875rem',
-            '.MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.primary.light },
-            '&:hover': {
-              '.MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.primary.main }
-            }
-          })
+            color: 'inherit',
+            '.MuiOutlinedInput-notchedOutline': { borderColor: 'inherit' },
+            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'inherit' },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'inherit' },
+            '.MuiSvgIcon-root': { color: 'inherit' }
+          }
         }
       }
     }

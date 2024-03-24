@@ -1,13 +1,13 @@
 import Box from '@mui/material/Box'
-import React from 'react'
 
 const BoardContent = () => {
   return (
     <Box
       sx={{
-        bgcolor: 'primary.main',
-        width: 1,
-        height: (theme) => `calc(100vh - ${theme.trello.appBarHeight} - ${theme.trello.boardBarHeight})`,
+        width: '100%',
+        // height: (theme) =>
+        //   `calc(100vh - ${theme.trello.appBarHeight} - ${theme.trello.boardBarHeight})`,
+        flexGrow: 1,
         display: 'flex',
         alignItems: 'center'
       }}

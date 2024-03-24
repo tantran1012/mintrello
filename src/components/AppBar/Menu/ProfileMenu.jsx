@@ -27,13 +27,12 @@ const ProfileMenu = (props) => {
         <IconButton
           id="basic-button-profile"
           onClick={handleClick}
+          size="large"
           aria-controls={open ? 'basic-menu-profile' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }} alt="avatar" src="">
-            M
-          </Avatar>
+          <Avatar sx={{ width: 36, height: 36 }} alt="avatar" src="./avatar/mint.jpg" />
         </IconButton>
       </Tooltip>
       <Menu

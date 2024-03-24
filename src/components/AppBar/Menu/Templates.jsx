@@ -31,6 +31,7 @@ const Templates = (props) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         size="large"
+        color="inherit"
         onClick={handleClick}
         endIcon={<ExpandMoreIcon />}
       >
