@@ -4,13 +4,19 @@ import {
   Experimental_CssVarsProvider as CssVarsProvider,
   experimental_extendTheme as extendTheme
 } from '@mui/material/styles'
-// Create a theme instance.
+
+const BOARD_BAR_HEIGHT = '60px'
+const BOARD_CONTENT_HEIGHT = `calc(100vh - 64px - ${BOARD_BAR_HEIGHT})`
+const COLUMN_HEADER_HEIGHT = '50px'
+const COLUMN_FOOTER_HEIGHT = '56px'
 
 const ThemeConfig = ({ children }) => {
   const theme = extendTheme({
     trello: {
-      appBarHeight: '48px',
-      boardBarHeight: '58px'
+      boardBarHeight: BOARD_BAR_HEIGHT,
+      boardContentHeight: BOARD_CONTENT_HEIGHT,
+      columnHeaderHeight: COLUMN_HEADER_HEIGHT,
+      columnFooterHeight: COLUMN_FOOTER_HEIGHT
     },
     colorSchemes: {
       // light: {

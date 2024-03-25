@@ -14,10 +14,10 @@ const BoardBar = () => {
   return (
     <Box
       p="8px"
-      boxShadow={2}
       display="flex"
       justifyContent="space-between"
       sx={{
+        height: (theme) => theme.trello.boardBarHeight,
         overflowX: 'auto'
       }}
     >
