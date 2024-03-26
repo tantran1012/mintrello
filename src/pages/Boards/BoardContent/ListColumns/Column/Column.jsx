@@ -1,3 +1,5 @@
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import Cloud from '@mui/icons-material/Cloud'
 import ContentCopy from '@mui/icons-material/ContentCopy'
@@ -23,15 +25,29 @@ import ListCards from './ListCards/ListCards'
 
 const Column = (props) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const { column } = props
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: column._id,
+    data: { ...column }
+  })
+  const dndKitColumnStyle = {
+    // touchAction: 'none', // Dành cho sensor default dạng pointerSensor
+
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
-  const { column } = props
 
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box
+      ref={setNodeRef}
+      style={dndKitColumnStyle}
+      {...attributes}
+      {...listeners}
       sx={{
         minWidth: '300px',
         maxWidth: '300px',
