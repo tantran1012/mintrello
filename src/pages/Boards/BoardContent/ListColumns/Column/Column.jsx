@@ -18,13 +18,17 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { APP_STYLE } from '~/const/common'
+import { mapOrder } from '~/utils'
 import ListCards from './ListCards/ListCards'
 
-const Column = () => {
+const Column = (props) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
+  const { column } = props
+
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box
@@ -44,14 +48,16 @@ const Column = () => {
       <Box
         sx={{
           height: (theme) => theme.trello.columnHeaderHeight,
-          p: 2,
+          py: 2,
+          pl: 2,
+          pr: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between'
         }}
       >
         <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-          Column Title
+          {column?.title}
         </Typography>
         <Box>
           <Tooltip title="More options">
@@ -60,7 +66,7 @@ const Column = () => {
               aria-controls={open ? 'basic-menu-column-dropdown' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              size="large"
+              size="small"
               color="inherit"
               onClick={handleClick}
             >
@@ -118,7 +124,8 @@ const Column = () => {
       </Box>
 
       {/* Box list card */}
-      <ListCards />
+
+      <ListCards cards={orderedCards} />
 
       {/* Box column Footer */}
       <Box

@@ -1,9 +1,11 @@
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import { APP_STYLE } from '~/const/common'
 import Column from './Column/Column'
 
-const ListColumns = () => {
+const ListColumns = (props) => {
+  const { columns } = props
   return (
     <Box
       width="100%"
@@ -12,13 +14,18 @@ const ListColumns = () => {
       overflow="auto hidden"
       sx={{ '&::-webkit-scrollbar-track': { m: 2 } }}
     >
-      <Column />
+      {columns?.map((column) => (
+        <Column column={column} key={column._id} />
+      ))}
       <Box
         maxWidth="200px"
         minWidth="200px"
         height="fit-content"
         mx={2}
-        sx={{ bgcolor: '#00000033', borderRadius: '6px' }}
+        sx={{
+          bgcolor: (theme) => (theme.palette.mode === APP_STYLE.DARK ? '#33364380' : '#ebecf080'),
+          borderRadius: '6px'
+        }}
       >
         <Button
           fullWidth

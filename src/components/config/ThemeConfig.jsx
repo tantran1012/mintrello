@@ -47,6 +47,9 @@ const ThemeConfig = ({ children }) => {
             '*::-webkit-scrollbar-thumb:hover': {
               backgroundColor: grey[500],
               borderRadius: '8px'
+            },
+            '*::-webkit-scrollbar-track': {
+              margin: '0 8px 0 16px'
             }
           }
         }

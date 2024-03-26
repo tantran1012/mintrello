@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box'
 import Card from './Card/Card'
-const ListCards = () => {
+
+const ListCards = (props) => {
+  const { cards } = props
   return (
     <Box
       display="flex"
@@ -16,10 +18,9 @@ const ListCards = () => {
 					- ${theme.spacing(5)})`
       }
     >
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {cards.map((card) => (
+        <Card key={card._id} card={card} />
+      ))}
     </Box>
   )
 }

@@ -10,7 +10,11 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Tooltip from '@mui/material/Tooltip'
-const BoardBar = () => {
+import { capitalizeFirstLetter } from '~/utils'
+
+const BoardBar = (props) => {
+  const { board } = props
+
   return (
     <Box
       p="8px"
@@ -25,14 +29,14 @@ const BoardBar = () => {
         <Chip
           icon={<DashboardIcon />}
           sx={{ px: '5px', border: 'none', borderRadius: '4px' }}
-          label="Hello world"
+          label={board?.title}
           variant="outlined"
           clickable
         />
         <Chip
           icon={<VpnLockIcon />}
           sx={{ px: '5px', border: 'none', borderRadius: '4px' }}
-          label="Public/Private workspace"
+          label={capitalizeFirstLetter(board?.type)}
           variant="outlined"
           clickable
         />

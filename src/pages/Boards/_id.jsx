@@ -1,4 +1,5 @@
 import Container from '@mui/material/Container'
+import { mockData } from '~/apis/mock-data'
 import TrelloAppBar from '~/components/AppBar/AppBar'
 import { APP_STYLE } from '~/const/common'
 import BoardBar from './BoardBar/BoardBar'
@@ -20,8 +21,8 @@ const Board = () => {
       }}
     >
       <TrelloAppBar />
-      <BoardBar />
-      <BoardContent />
+      <BoardBar board={mockData?.board} />
+      <BoardContent board={mockData?.board} />
     </Container>
   )
 }

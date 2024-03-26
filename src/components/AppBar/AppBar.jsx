@@ -54,7 +54,7 @@ const TrelloAppBar = (props) => {
           Create
         </Button>
       </Box>
-      <ModeSelect sx={{ alignSelf: 'center' }} />
+      <ModeSelect sx={{ alignSelf: 'center', mb: 3 }} />
     </Box>
   )
 
