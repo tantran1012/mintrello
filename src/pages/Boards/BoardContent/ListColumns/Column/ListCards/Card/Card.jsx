@@ -1,3 +1,5 @@
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 import CommentIcon from '@mui/icons-material/Comment'
 import GroupIcon from '@mui/icons-material/Group'
@@ -12,11 +14,30 @@ import Typography from '@mui/material/Typography'
 const Card = (props) => {
   const { card } = props
 
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: card._id,
+    data: { ...card }
+  })
+  const dndKitCardStyle = {
+    // touchAction: 'none', // Dành cho sensor default dạng pointerSensor
+
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging && 0.5,
+    border: isDragging && '1px solid #2ecc71'
+  }
+
   const shouldShowCardAction =
     !!card?.memberIds.length || !!card?.comments.length || !!card?.attachments.length
 
   return (
-    <MuiCard sx={{ overflow: 'unset' }}>
+    <MuiCard
+      ref={setNodeRef}
+      style={dndKitCardStyle}
+      {...attributes}
+      {...listeners}
+      sx={{ overflow: 'unset' }}
+    >
       <CardActionArea>
         {card?.cover && (
           <CardMedia component="img" alt={card.title} height="140" image={card?.cover} />
