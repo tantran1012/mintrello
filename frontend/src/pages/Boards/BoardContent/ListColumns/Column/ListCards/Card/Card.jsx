@@ -5,7 +5,6 @@ import CommentIcon from '@mui/icons-material/Comment'
 import GroupIcon from '@mui/icons-material/Group'
 import { Card as MuiCard } from '@mui/material'
 import Button from '@mui/material/Button'
-import CardActionArea from '@mui/material/CardActionArea'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
@@ -28,7 +27,7 @@ const Card = (props) => {
   }
 
   const shouldShowCardAction =
-    !!card?.memberIds.length || !!card?.comments.length || !!card?.attachments.length
+    !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
 
   return (
     <MuiCard
@@ -36,16 +35,22 @@ const Card = (props) => {
       style={dndKitCardStyle}
       {...attributes}
       {...listeners}
-      sx={{ overflow: 'unset' }}
+      sx={{
+        overflow: card?.FE_placeholderCard ? 'hidden' : 'unset',
+        height: card?.FE_placeholderCard ? '0px' : 'unset'
+
+        // overflow: 'unset',
+        // display: card?.FE_placeholderCard ? 'none' : 'block'
+      }}
     >
-      <CardActionArea>
-        {card?.cover && (
-          <CardMedia component="img" alt={card.title} height="140" image={card?.cover} />
-        )}
-        <CardContent sx={{ p: 1.5 }}>
-          <Typography variant="body2">{card.title}</Typography>
-        </CardContent>
-      </CardActionArea>
+      {/* <CardActionArea> */}
+      {card?.cover && (
+        <CardMedia component="img" alt={card.title} height="140" image={card?.cover} />
+      )}
+      <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
+        <Typography variant="body2">{card.title}</Typography>
+      </CardContent>
+      {/* </CardActionArea> */}
       {shouldShowCardAction && (
         <CardActions sx={{ pt: 0, px: 0.5 }}>
           {!!card?.memberIds.length && (

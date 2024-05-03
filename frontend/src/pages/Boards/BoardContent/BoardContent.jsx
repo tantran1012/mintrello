@@ -12,9 +12,9 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { mapOrder } from '~/utils'
+import { generatePlaceholderCard, mapOrder } from '~/utils'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
@@ -84,6 +84,11 @@ const BoardContent = (props) => {
           (card) => card._id !== activeDraggingCardId
         )
 
+        //Thêm placeholder-card nếu column rỗng
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards.push(generatePlaceholderCard(nextActiveColumn))
+        }
+
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map((card) => card._id)
       }
 
@@ -101,6 +106,7 @@ const BoardContent = (props) => {
           ...activeDraggingCardData,
           columnId: nextOverColumn._id
         })
+        nextOverColumn.cards = nextOverColumn.cards.filter((card) => !card.FE_placeholderCard)
 
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map((card) => card._id)
       }
@@ -299,8 +305,8 @@ const BoardContent = (props) => {
       onDragEnd={handleDragEnd}
       sensors={sensors}
       // Nếu chỉ dùng closestCorners sẽ bị bug flickering + sai dữ liệu
-      // collisionDetection={closestCorners}
-      collisionDetection={collisionDetectionStrategy}
+      collisionDetection={closestCorners}
+      // collisionDetection={collisionDetectionStrategy}
     >
       <Box width="100%" height={(theme) => theme.trello.boardContentHeight} p="10px 0">
         <ListColumns columns={orderedColumns} />

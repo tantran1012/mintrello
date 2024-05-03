@@ -30,3 +30,12 @@ export const mapOrder = (originalArray, orderArray, key) => {
   if (!originalArray || !orderArray || !key) return []
   return [...originalArray].sort((a, b) => orderArray.indexOf(a[key]) - orderArray.indexOf(b[key]))
 }
+
+export const generatePlaceholderCard = (column) => {
+  return {
+    _id: `${column._id}-placeholder-card`,
+    boardId: column.boardId,
+    columnId: column._id,
+    FE_placeholderCard: true
+  }
+}
