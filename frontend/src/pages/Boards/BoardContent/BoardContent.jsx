@@ -207,7 +207,6 @@ const BoardContent = (props) => {
 
         //Dùng arrayMove để sắp xếp array ban đầu
         const dndOrderedCards = arrayMove(activeColumn?.cards, oldCardIndex, newCardIndex)
-        console.log(dndOrderedCards)
         setOrderedColumns((prevColumns) => {
           const nextColumns = cloneDeep(prevColumns)
           const targetColumn = nextColumns.find((c) => c._id === overColumn._id)

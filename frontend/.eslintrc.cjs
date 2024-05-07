@@ -10,7 +10,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
-  plugins: ['react', 'react-hooks', 'react-refresh', 'simple-import-sort', 'import'],
+  plugins: ['react', 'react-hooks', 'react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     'react-hooks/rules-of-hooks': 'error',
@@ -46,19 +46,19 @@ module.exports = {
 
     //React
     'react/jsx-no-target-blank': 'off',
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
 
     //import
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
-    'import/first': 'error',
-    'import/newline-after-import': 'error',
-    'import/no-duplicates': 'error',
-    'import/order': [
-      'error',
-      {
-        groups: ['index', 'sibling', 'parent', 'internal', 'external', 'builtin']
-      }
-    ]
+    // 'simple-import-sort/imports': 'error',
+    // 'simple-import-sort/exports': 'error',
+    // 'import/first': 'error',
+    // 'import/newline-after-import': 'error',
+    // 'import/no-duplicates': 'error',
+    // 'import/order': [
+    //   'error',
+    //   {
+    //     groups: ['index', 'sibling', 'parent', 'internal', 'external', 'builtin']
+    //   }
+    // ]
   }
 }
