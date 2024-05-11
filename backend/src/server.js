@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
-/* eslint-disable-next-line no-console */
+
 import AsyncExitHook from 'async-exit-hook'
 import express from 'express'
 import getEnv from './config/environment'
 import { CLOSE_DB, CONNECT_DB } from './config/mongodb'
+import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleware'
+import { APIs_V1 } from './routes/v1'
 
 const START_SERVER = () => {
   const app = express()
@@ -11,16 +13,22 @@ const START_SERVER = () => {
   const hostname = getEnv('APP_HOST')
   const port = getEnv('APP_PORT')
 
-  app.get('/', async (req, res) => {
-    res.end('<h1>Hello World!</h1><hr>')
-  })
+  //Enable req.body json data
+  app.use(express.json())
+
+  //Use API V1
+  app.use('/v1', APIs_V1)
+
+  //Middleware xử lý lỗi
+  app.use(errorHandlingMiddleware)
 
   app.listen(port, hostname, () => {
-    console.log(`Hello world, I am running at ${hostname}:${port}/`)
+    console.log(`Hello world, I am running at http://${hostname}:${port}`)
   })
 
   AsyncExitHook(() => {
     CLOSE_DB()
+    console.log('server is shutting down')
   })
 }
 

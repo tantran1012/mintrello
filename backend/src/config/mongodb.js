@@ -20,6 +20,8 @@ export const CONNECT_DB = async () => {
 }
 
 export const CLOSE_DB = async () => {
+  // eslint-disable-next-line no-console
+  console.log('connect to DB is closing')
   await mongoClientInstance.close()
 }
 
