@@ -1,11 +1,17 @@
 import Container from '@mui/material/Container'
-import { mockData } from '~/apis/mock-data'
+import { useEffect, useState } from 'react'
+import { fetchBoardDetailsAPI } from '~/apis'
 import TrelloAppBar from '~/components/AppBar/AppBar'
 import { APP_STYLE } from '~/const/common'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 
 const Board = () => {
+  const [board, setBoard] = useState(null)
+  useEffect(() => {
+    const boardId = '663f983c8e13d35e3b6d6887'
+    fetchBoardDetailsAPI(boardId).then((board) => setBoard(board))
+  }, [])
   return (
     <Container
       disableGutters
@@ -21,8 +27,8 @@ const Board = () => {
       }}
     >
       <TrelloAppBar />
-      <BoardBar board={mockData?.board} />
-      <BoardContent board={mockData?.board} />
+      <BoardBar board={board} />
+      <BoardContent board={board} />
     </Container>
   )
 }
