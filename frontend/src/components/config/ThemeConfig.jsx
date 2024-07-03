@@ -4,7 +4,8 @@ import {
   Experimental_CssVarsProvider as CssVarsProvider,
   experimental_extendTheme as extendTheme
 } from '@mui/material/styles'
-
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 const BOARD_BAR_HEIGHT = '60px'
 const BOARD_CONTENT_HEIGHT = `calc(100vh - 64px - ${BOARD_BAR_HEIGHT})`
 const COLUMN_HEADER_HEIGHT = '50px'
@@ -86,8 +87,14 @@ const ThemeConfig = ({ children }) => {
 
   return (
     <>
-      {/* <ToastContainer autoClose={5000} limit={3} pauseOnHover position="bottom-right" /> */}
       <CssVarsProvider theme={theme}>
+        <ToastContainer
+          autoClose={5000}
+          limit={5}
+          theme="colored"
+          pauseOnHover
+          position="bottom-right"
+        />
         <CssBaseline />
         {children}
       </CssVarsProvider>

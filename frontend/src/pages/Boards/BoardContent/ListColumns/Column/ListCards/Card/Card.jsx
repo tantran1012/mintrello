@@ -37,8 +37,9 @@ const Card = (props) => {
       {...listeners}
       sx={{
         overflow: card?.FE_placeholderCard ? 'hidden' : 'unset',
-        height: card?.FE_placeholderCard ? '0px' : 'unset'
-
+        height: card?.FE_placeholderCard ? '0px' : 'unset',
+        border: card?.FE_placeholderCard ? 'none' : '1px solid transparent',
+        '&:hover': { borderColor: (theme) => theme.palette.primary.main }
         // overflow: 'unset',
         // display: card?.FE_placeholderCard ? 'none' : 'block'
       }}

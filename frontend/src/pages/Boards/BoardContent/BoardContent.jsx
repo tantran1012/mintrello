@@ -1,8 +1,6 @@
 import {
   DndContext,
   DragOverlay,
-  MouseSensor,
-  TouchSensor,
   closestCorners,
   defaultDropAnimationSideEffects,
   getFirstCollision,
@@ -14,6 +12,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 import { cloneDeep, isEmpty } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { MouseSensor, TouchSensor } from '~/customLibraries/dndKitSensor'
 import { generatePlaceholderCard, mapOrder } from '~/utils'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
@@ -32,7 +31,7 @@ const BoardContent = (props) => {
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
-  const { board } = props
+  const { board, createNewColumn, createNewCard } = props
 
   const lastOverId = useRef(null)
 
@@ -308,7 +307,11 @@ const BoardContent = (props) => {
       // collisionDetection={collisionDetectionStrategy}
     >
       <Box width="100%" height={(theme) => theme.trello.boardContentHeight} p="10px 0">
-        <ListColumns columns={orderedColumns} />
+        <ListColumns
+          columns={orderedColumns}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard}
+        />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN ? (

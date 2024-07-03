@@ -26,13 +26,15 @@ const BoardBar = (props) => {
       }}
     >
       <Box display="flex" alignItems="center" flexDirection="row" gap={1}>
-        <Chip
-          icon={<DashboardIcon />}
-          sx={{ px: '5px', border: 'none', borderRadius: '4px' }}
-          label={board?.title}
-          variant="outlined"
-          clickable
-        />
+        <Tooltip title={board?.description}>
+          <Chip
+            icon={<DashboardIcon />}
+            sx={{ px: '5px', border: 'none', borderRadius: '4px' }}
+            label={board?.title}
+            variant="outlined"
+            clickable
+          />
+        </Tooltip>
         <Chip
           icon={<VpnLockIcon />}
           sx={{ px: '5px', border: 'none', borderRadius: '4px' }}
@@ -80,28 +82,28 @@ const BoardBar = (props) => {
           max={7}
         >
           <Tooltip title="Remy Sharp">
-            <Avatar alt="Remy Sharp" src="./avatar/avatar1.jpg" />
+            <Avatar alt="Remy Sharp" src="/avatar/avatar1.jpg" />
           </Tooltip>
           <Tooltip title="Travis Howard">
-            <Avatar alt="Travis Howard" src="./avatar/avatar2.jpg" />
+            <Avatar alt="Travis Howard" src="/avatar/avatar2.jpg" />
           </Tooltip>
           <Tooltip title="Cindy Baker">
-            <Avatar alt="Cindy Baker" src="./avatar/avatar3.png" />
+            <Avatar alt="Cindy Baker" src="/avatar/avatar3.png" />
           </Tooltip>
           <Tooltip title="Agnes Walker">
-            <Avatar alt="Agnes Walker" src="./avatar/avatar4.jpg" />
+            <Avatar alt="Agnes Walker" src="/avatar/avatar4.jpg" />
           </Tooltip>
           <Tooltip title="Trevor Henderson">
-            <Avatar alt="Trevor Henderson" src="./avatar/avatar5.jpg" />
+            <Avatar alt="Trevor Henderson" src="/avatar/avatar5.jpg" />
           </Tooltip>
           <Tooltip title="Anh da den">
-            <Avatar alt="Anh da den" src="./avatar/avatar6.png" />
+            <Avatar alt="Anh da den" src="/avatar/avatar6.png" />
           </Tooltip>
           <Tooltip title="Chi da trang">
-            <Avatar alt="Chi da trang" src="./avatar/avatar7.png" />
+            <Avatar alt="Chi da trang" src="/avatar/avatar7.png" />
           </Tooltip>
           <Tooltip title="MinhTan">
-            <Avatar alt="MinhTan" src="./avatar/mint.jpg" />
+            <Avatar alt="MinhTan" src="/avatar/mint.jpg" />
           </Tooltip>
         </AvatarGroup>
       </Box>

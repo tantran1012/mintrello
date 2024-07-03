@@ -1,11 +1,11 @@
+import { RouterProvider } from 'react-router-dom'
 import ThemeConfig from '~/components/config/ThemeConfig'
-import Board from '~/pages/Boards/_id'
-
+import router from './routes'
 function App() {
   return (
     <>
       <ThemeConfig>
-        <Board />
+        <RouterProvider router={router} />
       </ThemeConfig>
     </>
   )

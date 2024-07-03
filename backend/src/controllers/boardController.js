@@ -20,7 +20,18 @@ const getDetails = async (req, res, next) => {
   }
 }
 
+const getListBoards = async (req, res, next) => {
+  try {
+    // const { userId } = req.query.userId
+    const boards = await boardService.getListBoards(/*userId*/)
+    res.status(StatusCodes.OK).json(boards)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const boardController = {
   createNew,
-  getDetails
+  getDetails,
+  getListBoards
 }

@@ -2,9 +2,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import InputBase from '@mui/material/InputBase'
 import { alpha, styled } from '@mui/material/styles'
 import { useState } from 'react'
+import StyledInputBase from '~/components/AppBar/Menu/StyledInputBase'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -31,22 +31,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center'
 }))
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch'
-      }
-    }
-  }
-}))
 const SearchBar = (props) => {
   const [searchValue, setSearchValue] = useState('')
 
@@ -57,6 +41,7 @@ const SearchBar = (props) => {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
+          collapse
           type="text"
           value={searchValue}
           placeholder="Search…"
