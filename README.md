@@ -37,6 +37,7 @@ yarn build
 
 - Frontend
   - ReactJS
+  - Redux-toolkit
   - DnD-Kit
   - Material UI
   - Build tool: ViteJS

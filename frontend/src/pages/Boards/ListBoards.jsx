@@ -3,15 +3,19 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { useEffect, useState } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { fetchListBoard } from '~/apis'
+import { getListBoard } from '~/apis/boardApis'
 import Link from '~/components/Link'
 
 const ListBoards = () => {
   const [listBoards, setListBoards] = useState([])
+
   useEffect(() => {
-    fetchListBoard().then((list) => setListBoards(list))
+    getListBoard().then((list) => setListBoards(list))
   }, [])
+
+  if (listBoards.length < 1) return <CircularProgress />
   return (
     <Box display="flex" gap={2} margin={2} flexDirection="column">
       {listBoards.map((board) => {

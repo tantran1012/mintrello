@@ -3,5 +3,3 @@ export const APP_STYLE = {
   DARK: 'dark',
   SYSTEM: 'system'
 }
-
-export const API_ROOT = 'http://localhost:8017'

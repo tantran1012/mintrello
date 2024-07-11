@@ -30,8 +30,29 @@ const getListBoards = async (req, res, next) => {
   }
 }
 
+const update = async (req, res, next) => {
+  try {
+    const boardId = req.params.id
+    const updatedBoard = await boardService.update(boardId, req.body)
+    res.status(StatusCodes.OK).json(updatedBoard)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const MoveCardBetweenDifferentColumns = async (req, res, next) => {
+  try {
+    const result = await boardService.MoveCardBetweenDifferentColumns(req.body)
+    res.status(StatusCodes.OK).json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const boardController = {
   createNew,
   getDetails,
-  getListBoards
+  getListBoards,
+  update,
+  MoveCardBetweenDifferentColumns
 }

@@ -1,57 +1,46 @@
+import CircularProgress from '@mui/material/CircularProgress'
 import { isEmpty } from 'lodash'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { createNewCardAPI, createNewColumnAPI, fetchBoardDetailsAPI } from '~/apis'
-import { generatePlaceholderCard } from '~/utils'
+import { getBoardDetailsAPI } from '~/apis/boardApis'
+import { editBoard } from '~/redux/slices/BoardSlice'
+import { generatePlaceholderCard, mapOrder } from '~/utils'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 
 const Board = () => {
-  const [board, setBoard] = useState(null)
   const { boardId } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const board = useSelector((state) => state.board)
+
   useEffect(() => {
-    // const boardId = '66602f13d822b12ecb2b3261'
-    fetchBoardDetailsAPI(boardId)
+    getBoardDetailsAPI(boardId)
       .then((board) => {
+        board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
         board.columns.forEach((column) => {
           if (isEmpty(column.cards)) {
             const phdCard = generatePlaceholderCard(column)
             column.cards = [phdCard]
             column.cardOrderIds[phdCard._id]
+          } else {
+            column.cards = mapOrder(column.cards, column.cardOrderIds, '_id')
           }
         })
-        setBoard(board)
+        dispatch(editBoard(board))
       })
-      .catch((error) => navigate('/404'))
+      .catch((error) => {
+        navigate('/404')
+        // throw error
+      })
   }, [])
-  const createNewColumn = async (newColumnData) => {
-    const createdColumn = await createNewColumnAPI({ ...newColumnData, boardId: board._id })
-    const newBoard = { ...board }
 
-    const phdCard = generatePlaceholderCard(createdColumn)
-    createdColumn.cards = [phdCard]
-    createdColumn.cardOrderIds[phdCard._id]
-
-    newBoard.columns.push(createdColumn)
-    newBoard.columnOrderIds.push(createdColumn._id)
-    setBoard(newBoard)
-  }
-
-  const createNewCard = async (newCardData) => {
-    const createdCard = await createNewCardAPI({ ...newCardData, boardId: board._id })
-    const newBoard = { ...board }
-    const columnToUpdate = newBoard.columns.find((column) => column._id === createdCard.columnId)
-    if (columnToUpdate) {
-      columnToUpdate.cards.push(createdCard)
-      columnToUpdate.cardOrderIds.push(createdCard._id)
-    }
-    setBoard(newBoard)
-  }
+  if (!board._id) return <CircularProgress />
   return (
     <>
       <BoardBar board={board} />
-      <BoardContent board={board} createNewColumn={createNewColumn} createNewCard={createNewCard} />
+      <BoardContent board={board} />
     </>
   )
 }

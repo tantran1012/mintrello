@@ -17,6 +17,7 @@ const Card = (props) => {
     id: card._id,
     data: { ...card }
   })
+
   const dndKitCardStyle = {
     // touchAction: 'none', // Dành cho sensor default dạng pointerSensor
 
@@ -38,10 +39,12 @@ const Card = (props) => {
       sx={{
         overflow: card?.FE_placeholderCard ? 'hidden' : 'unset',
         height: card?.FE_placeholderCard ? '0px' : 'unset',
+        // overflow: 'unset',
+        // opacity: card?.FE_placeholderCard ? '0' : '1',
+        // minWidth: card?.FE_placeholderCard && '280px',
+        // pointerEvents: card?.FE_placeholderCard && 'none',
         border: card?.FE_placeholderCard ? 'none' : '1px solid transparent',
         '&:hover': { borderColor: (theme) => theme.palette.primary.main }
-        // overflow: 'unset',
-        // display: card?.FE_placeholderCard ? 'none' : 'block'
       }}
     >
       {/* <CardActionArea> */}

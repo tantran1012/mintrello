@@ -21,17 +21,22 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { cloneDeep } from 'lodash'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { postCreateNewCardAPI } from '~/apis/boardApis'
 import { APP_STYLE } from '~/const/common'
-import { mapOrder } from '~/utils'
+import { editBoard } from '~/redux/slices/BoardSlice'
 import ListCards from './ListCards/ListCards'
 
 const Column = (props) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')
-  const { column, createNewCard } = props
+  const { columns } = useSelector((state) => state.board)
+  const dispatch = useDispatch()
+  const { column } = props
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: column._id,
     data: { ...column }
@@ -48,7 +53,16 @@ const Column = (props) => {
       title: newCardTitle,
       columnId: column._id
     }
-    await createNewCard(newCardData)
+
+    const createdCard = await postCreateNewCardAPI({ ...newCardData, boardId: column.boardId })
+    const newColumns = cloneDeep(columns)
+    const columnToUpdate = newColumns.find((column) => column._id === createdCard.columnId)
+    if (columnToUpdate) {
+      if (columnToUpdate.cards[0].FE_placeholderCard) columnToUpdate.cards.pop()
+      columnToUpdate.cards.push(createdCard)
+      columnToUpdate.cardOrderIds.push(createdCard._id)
+    }
+    dispatch(editBoard({ columns: newColumns }))
     setNewCardTitle('')
     toggleOpenNewCardForm()
   }
@@ -64,8 +78,6 @@ const Column = (props) => {
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
-
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box ref={setNodeRef} style={dndKitColumnStyle} {...attributes} component="div">
@@ -166,7 +178,7 @@ const Column = (props) => {
           </Box>
         </Box>
         {/* Box list card */}
-        <ListCards cards={orderedCards} />
+        <ListCards cards={column.cards} />
         {/* Box column Footer */}
         <Box
           sx={{
@@ -190,7 +202,14 @@ const Column = (props) => {
             </Button>
           ) : (
             <Box display="flex" gap={1} flexDirection="column" data-no-dnd="true">
-              <Card sx={{ overflow: 'unset', height: 'unset', border: '1px solid transparent' }}>
+              <Card
+                sx={{
+                  overflow: 'unset',
+                  height: 'unset',
+                  border: '1px solid transparent',
+                  mt: '2px'
+                }}
+              >
                 <InputBase
                   fullWidth
                   size="small"

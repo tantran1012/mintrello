@@ -4,17 +4,24 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
+import { cloneDeep } from 'lodash'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { postCreateNewColumnAPI } from '~/apis/boardApis'
 import StyledInputBase from '~/components/AppBar/Menu/StyledInputBase'
 import { APP_STYLE } from '~/const/common'
+import { editBoard } from '~/redux/slices/BoardSlice'
+import { generatePlaceholderCard } from '~/utils'
 import Column from './Column/Column'
 
 const ListColumns = (props) => {
-  const { columns, createNewColumn, createNewCard } = props
+  const { columns } = props
+  const board = useSelector((state) => state.board)
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
+  const dispatch = useDispatch()
 
   const addNewColumn = async () => {
     if (!newColumnTitle) {
@@ -22,11 +29,20 @@ const ListColumns = (props) => {
       return
     }
 
-    const newColumn = {
-      title: newColumnTitle
-    }
+    const createdColumn = await postCreateNewColumnAPI({
+      title: newColumnTitle,
+      boardId: board._id
+    })
 
-    await createNewColumn(newColumn)
+    const phdCard = generatePlaceholderCard(createdColumn)
+    createdColumn.cards = [phdCard]
+    createdColumn.cardOrderIds[phdCard._id]
+
+    const newBoard = cloneDeep(board)
+    newBoard.columns.push(createdColumn)
+    newBoard.columnOrderIds.push(createdColumn._id)
+    dispatch(editBoard(newBoard))
+
     setNewColumnTitle('')
     toggleOpenNewColumnForm()
   }
@@ -41,8 +57,8 @@ const ListColumns = (props) => {
         sx={{ '&::-webkit-scrollbar-track': { m: 2 } }}
       >
         {columns?.map((column) => (
-          <Column column={column} createNewCard={createNewCard} key={column._id} />
-        ))}{' '}
+          <Column column={column} key={column._id} />
+        ))}
         <Box
           maxWidth="250px"
           minWidth="250px"
